@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :mayor do
-    name { "MyString" }
-    gender { "MyString" }
-    city { nil }
+    name { "Milton" }
+    gender { "Male" }
+    city
   end
 end

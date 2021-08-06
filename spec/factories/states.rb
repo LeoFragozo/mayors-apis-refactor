@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :state do
-    name { "MyString" }
-    uf { "MyString" }
+    name { 'Rio Grande do Sul' }
+    uf { 'RS'}
   end
 end
