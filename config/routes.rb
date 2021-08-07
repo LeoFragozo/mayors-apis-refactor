@@ -4,10 +4,12 @@ Rails.application.routes.draw do
     namespace 'v1' do
       resources :states
       resources :cities
-      resources :mayors
-
-      get 'mayors/female', to: 'mayors#female'
-      get 'mayors/male', to: 'mayors#male'
+      resources :mayors, only: %i[index show create update destroy] do
+        collection do
+          get :is_male
+          get :is_female
+        end
+      end
     end
   end
 end
