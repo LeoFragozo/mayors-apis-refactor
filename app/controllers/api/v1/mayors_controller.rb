@@ -42,13 +42,13 @@ module Api
       end
 
       def is_male
-        @mayors = MayorSerializer.new(Mayor.is_male)
+        mayors = MayorSerializer.new(Mayor.is_male)
         render json: { status: 'SUCCESS', message: 'Dados dos prefeitos carregados', each_serializer: MayorSerializer },
                status: :ok
       end
 
       def is_female
-        @mayors = MayorSerializer.new(Mayor.is_female)
+        mayors = MayorSerializer.new(Mayor.is_female)
         render json: { status: 'SUCCESS', message: 'Dados das prefeitas carregadas', each_serializer: MayorSerializer },
                status: :ok
       end
