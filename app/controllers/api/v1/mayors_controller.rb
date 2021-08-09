@@ -4,8 +4,10 @@ module Api
   module V1
     class MayorsController < ApplicationController
       def index
-        mayors = Mayor.order('created_at ASC')
-        render json: { status: 'SUCCESS', message: 'Prefeito/as carregado//carregadas', data: mayors },
+        mayors = Mayor.filter_by_gender('Male') #Todo change male to database info
+        mayors = mayors.filter_by_gender(params[:gender]) if params[:gender].present?
+        binding.pry
+        render json: { status: 'SUCCESS', message: 'Prefeito/s carregado/s', data: mayors },
                status: :ok
       end
 

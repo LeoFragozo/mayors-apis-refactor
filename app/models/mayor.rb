@@ -1,6 +1,5 @@
 class Mayor < ApplicationRecord
   belongs_to :city
 
-  scope :is_male, -> { where(gender: 'male') }
-  scope :is_female, -> { where(gender: 'female') }
+  scope :filter_by_gender, ->(gender) { where gender: gender }
 end

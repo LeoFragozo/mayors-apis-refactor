@@ -53,19 +53,3 @@ describe 'update operation' do
     expect(response.status).to eq(200)
   end
 end
-
-describe 'filter mayor by gender' do
-  it 'show only male mayors' do
-    mayor = create(:mayor)
-    get '/api/v1/mayors/is_male'
-    expect(json_body[:message]).to eq('Dados dos prefeitos carregados')
-    expect(response.status).to eq(200)
-  end
-
-  it 'show only female mayors' do
-    mayor = create(:mayor)
-    get '/api/v1/mayors/is_female'
-    expect(json_body[:message]).to eq('Dados das prefeitas carregadas')
-    expect(response.status).to eq(200)
-  end
-end
