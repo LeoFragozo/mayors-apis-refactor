@@ -4,7 +4,7 @@ module Api
   module V1
     class MayorsController < ApplicationController
       def index
-        mayors = Mayor.filter_by_gender('Male') #Todo change male to database info
+        mayors = Mayor.filter_by_gender(params[:gender]) #Todo change male to database info
         mayors = mayors.filter_by_gender(params[:gender]) if params[:gender].present?
         binding.pry
         render json: { status: 'SUCCESS', message: 'Prefeito/s carregado/s', data: mayors },
