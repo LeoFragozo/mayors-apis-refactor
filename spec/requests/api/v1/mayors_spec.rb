@@ -9,9 +9,9 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
-  
+
   it 'must return the current male mayor data' do
-    create(:mayor, name: mayor.name, gender: 'Male') 
+    create(:mayor, name: mayor.name, gender: 'Male')
     get '/api/v1/mayors?gender=Male'
     expect(json_body[:data][0]).to have_key(:id)
     expect(json_body[:data][0]).to have_key(:name)
@@ -23,7 +23,7 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
   end
 
   it 'must return the current female mayor data' do
-    create(:mayor, name: mayor.name, gender: 'Female') 
+    create(:mayor, name: mayor.name, gender: 'Female')
     get '/api/v1/mayors?gender=Female'
     expect(json_body[:data][0]).to have_key(:id)
     expect(json_body[:data][0]).to have_key(:name)
