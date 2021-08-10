@@ -4,10 +4,10 @@ module Api
   module V1
     class MayorsController < ApplicationController
       def index
-        mayors = Mayor.filter_by_gender(params[:gender]) #Todo change male to database info
+        mayors = Mayor.filter_by_gender(params[:gender])
         mayors = mayors.filter_by_gender(params[:gender]) if params[:gender].present?
-        binding.pry
-        render json: { status: 'SUCCESS', message: 'Prefeito/s carregado/s', data: mayors },
+
+        render json: { status: 'SUCCESS', message: 'Prefeit/o/a/s carregado/a/s', data: mayors },
                status: :ok
       end
 
@@ -41,18 +41,6 @@ module Api
         mayor = Mayor.find(params[:id])
         mayor.destroy
         render json: { status: 'SUCCESS', message: 'Prefeito/a deletado/deletada ', data: mayor }, status: :ok
-      end
-
-      def is_male
-        mayors = MayorSerializer.new(Mayor.is_male)
-        render json: { status: 'SUCCESS', message: 'Dados dos prefeitos carregados', each_serializer: MayorSerializer },
-               status: :ok
-      end
-
-      def is_female
-        mayors = MayorSerializer.new(Mayor.is_female)
-        render json: { status: 'SUCCESS', message: 'Dados das prefeitas carregadas', each_serializer: MayorSerializer },
-               status: :ok
       end
 
       private

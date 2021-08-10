@@ -9,17 +9,29 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
       expect(response).to have_http_status(:ok)
     end
   end
-
-  it 'must return the current mayor data' do
-    create(:mayor)
-    get '/api/v1/mayors'
+  
+  it 'must return the current male mayor data' do
+    create(:mayor, name: mayor.name, gender: 'Male') 
+    get '/api/v1/mayors?gender=Male'
     expect(json_body[:data][0]).to have_key(:id)
     expect(json_body[:data][0]).to have_key(:name)
     expect(json_body[:data][0]).to have_key(:gender)
     expect(json_body[:data][0]).to have_key(:created_at)
     expect(json_body[:data][0]).to have_key(:updated_at)
     expect(json_body[:data][0][:name]).to eq(mayor.name)
-    expect(json_body[:data][0][:gender]).to eq(mayor.gender)
+    expect(json_body[:data][0][:gender]).to eq('Male')
+  end
+
+  it 'must return the current female mayor data' do
+    create(:mayor, name: mayor.name, gender: 'Female') 
+    get '/api/v1/mayors?gender=Female'
+    expect(json_body[:data][0]).to have_key(:id)
+    expect(json_body[:data][0]).to have_key(:name)
+    expect(json_body[:data][0]).to have_key(:gender)
+    expect(json_body[:data][0]).to have_key(:created_at)
+    expect(json_body[:data][0]).to have_key(:updated_at)
+    expect(json_body[:data][0][:name]).to eq(mayor.name)
+    expect(json_body[:data][0][:gender]).to eq('Female')
   end
 
   it 'returns a 200 custom status code' do
