@@ -11,11 +11,11 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
   end
 
   describe 'GET /mayors ' do
-    it '.create' do
+    it 'create mayors data' do
       get "/api/v1/mayors/#{mayor.id}"
       expect(response).to have_http_status(200)
     end
-    it '.show' do
+    it 'show mayor data' do
       get "/api/v1/mayors/#{mayor.id}"
       expect(json_body[:data][:name]).to eq(mayor.name)
       expect(json_body[:data][:gender]).to eq(mayor.gender)
@@ -23,7 +23,7 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
   end
 
   describe 'PUT mayors/:id' do
-    it '.update' do
+    it 'update mayor data' do
       body_data = { mayor: { name: mayor.name, gender: mayor.gender } }
       put "/api/v1/mayors/#{mayor.id}", params: body_data
       expect(json_body[:message]).to eq('Prefeito/a atualizado/a')
@@ -32,7 +32,7 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
   end
 
   describe 'DELETE mayors:/id'
-  it '.destroy' do
+  it '.destroy mayor data' do
     delete "/api/v1/mayors/#{mayor.id}"
     expect(response.status).to eq(200)
   end

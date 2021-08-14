@@ -11,18 +11,18 @@ RSpec.describe 'Api::V1::Cities', type: :request do
   end
 
   describe 'GET /cities ' do
-    it '.create' do
+    it 'create cities data' do
       get "/api/v1/cities/#{city.id}"
       expect(response).to have_http_status(200)
     end
-    it '.show' do
+    it  'show city data' do
       get "/api/v1/cities/#{city.id}"
       expect(json_body[:data][:name]).to eq(city.name)
     end
   end
 
   describe 'PUT /cities/:id' do
-    it '.update' do
+    it 'update city data' do
       body_data = { city: { name: city.name } }
       put "/api/v1/cities/#{city.id}", params: body_data
       expect(json_body[:message]).to eq('Cidade atualizada')
@@ -31,7 +31,7 @@ RSpec.describe 'Api::V1::Cities', type: :request do
   end
 
   describe 'DELETE cities/:id' do
-    it '.destroy' do
+    it 'destroy city data' do
       delete "/api/v1/cities/#{city.id}"
       expect(response.status).to eq(200)
     end
