@@ -30,10 +30,9 @@ module Api
       def update
         mayor = Mayor.find(params[:id])
         if mayor.update(mayor_params)
-          render json: { status: 'SUCCESS', message: 'Prefeito/a atualizado/a', data: mayor }, status: :ok
+          render json: { status: 'SUCCESS' }, status: :no_content
         else
-          render json: { status: 'ERROR', message: 'Prefeito/a não atualizado/a', data: mayor.erros },
-                 status: :unprocessable_entity
+          render json: { status: 'ERROR' }, status: :unprocessable_entity
         end
       end
 

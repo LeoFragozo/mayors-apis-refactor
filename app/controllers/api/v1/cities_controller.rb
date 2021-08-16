@@ -20,7 +20,7 @@ module Api
         if city.save
           render json: { status: 'SUCCESS', message: 'Cidade salva', data: city }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Cidade não salva', data: city.erros },
+          render json: { status: 'ERROR', message: 'Erro ao criar cidade', data: city.erros },
                  status: :unprocessable_entity
         end
       end
@@ -28,10 +28,9 @@ module Api
       def update
         city = City.find(params[:id])
         if city.update(city_params)
-          render json: { status: 'SUCCESS', message: 'Cidade atualizada', data: city }, status: :ok
+          render json: { status: 'SUCCESS' }, status: :no_content
         else
-          render json: { status: 'ERROR', message: 'Cidade não atualizada', data: city.erros },
-                 status: :unprocessable_entity
+          render json: { status: 'ERROR' }, status: :unprocessable_entity
         end
       end
 

@@ -15,18 +15,27 @@ RSpec.describe 'Api::V1::Cities', type: :request do
       get "/api/v1/cities/#{city.id}"
       expect(response).to have_http_status(200)
     end
-    it  'show city data' do
+    it 'show city data' do
       get "/api/v1/cities/#{city.id}"
       expect(json_body[:data][:name]).to eq(city.name)
     end
   end
 
   describe 'PUT /cities/:id' do
-    it 'update city data' do
-      body_data = { city: { name: city.name } }
-      put "/api/v1/cities/#{city.id}", params: body_data
-      expect(json_body[:message]).to eq('Cidade atualizada')
-      expect(response.status).to eq(200)
+    context 'when city data exist' do
+      it 'update city data' do
+        body_data = { city: { name: city.name } }
+        put "/api/v1/cities/#{city.id}", params: body_data
+        expect(response.status).to eq(204)
+      end
+    end
+
+    context 'when city dosent exist' do
+      it 'doesnt update city data' do
+        body_data = { city: { name: nil } }
+        put "/api/v1/cities/#{city.id}", params: body_data
+        expect(response.status).to eq(422)
+      end
     end
   end
 

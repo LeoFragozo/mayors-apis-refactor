@@ -23,11 +23,20 @@ RSpec.describe 'Api::V1::Mayors', type: :request do
   end
 
   describe 'PUT mayors/:id' do
-    it 'update mayor data' do
-      body_data = { mayor: { name: mayor.name, gender: mayor.gender } }
-      put "/api/v1/mayors/#{mayor.id}", params: body_data
-      expect(json_body[:message]).to eq('Prefeito/a atualizado/a')
-      expect(response.status).to eq(200)
+    context 'when mayor data exist' do
+      it 'update mayor data' do
+        body_data = { mayor: { name: mayor.name, gender: mayor.gender } }
+        put "/api/v1/mayors/#{mayor.id}", params: body_data
+        expect(response.status).to eq(204)
+      end
+    end
+
+    context 'when mayor data doesnt exist' do
+      it 'doesnt update mayor data' do
+        body_data = { mayor: { name: nil, gender: nil } }
+        put "/api/v1/mayors/#{mayor.id}", params: body_data
+        expect(response.status).to eq(422)
+      end
     end
   end
 

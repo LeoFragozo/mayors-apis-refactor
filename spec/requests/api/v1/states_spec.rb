@@ -15,7 +15,6 @@ RSpec.describe 'Api::V1::States', type: :request do
       get "/api/v1/states/#{state.id}"
       expect(response).to have_http_status(200)
     end
-
     it 'show states data' do
       get "/api/v1/states/#{state.id}"
       expect(json_body[:data][:name]).to eq(state.name)
@@ -23,12 +22,21 @@ RSpec.describe 'Api::V1::States', type: :request do
     end
   end
 
-  describe 'DELETE states/:id' do
-    it 'update state data' do
-      body_data = { state: { name: state.name, uf: state.uf } }
-      put "/api/v1/states/#{state.id}", params: body_data
-      expect(json_body[:message]).to eq('Estado atualizado')
-      expect(response.status).to eq(200)
+  describe 'PUT states/:id' do
+    context 'when state data exist' do
+      it 'update state data' do
+        body_data = { state: { name: state.name, uf: state.uf } }
+        put "/api/v1/states/#{state.id}", params: body_data
+        expect(response.status).to eq(204)
+      end
+    end
+
+    context 'when state data doesnt exist' do
+      it 'doesnt update state data' do
+        body_data = { state: { name: nil, uf: nil } }
+        put "/api/v1/states/#{state.id}", params: body_data
+        expect(response.status).to eq(422)
+      end
     end
   end
 

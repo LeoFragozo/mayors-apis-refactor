@@ -28,10 +28,9 @@ module Api
       def update
         state = State.find(params[:id])
         if state.update(state_params)
-          render json: { status: 'SUCCESS', message: 'Estado atualizado', data: state }, status: :ok
+          render json: { status: 'SUCCESS' }, status: :no_content
         else
-          render json: { status: 'ERROR', message: 'Estado não atualizado', data: state.erros },
-                 status: :unprocessable_entity
+          render json: { status: 'ERROR' }, status: :unprocessable_entity
         end
       end
 
