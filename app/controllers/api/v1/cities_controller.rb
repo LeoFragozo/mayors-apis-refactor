@@ -16,11 +16,11 @@ module Api
       end
 
       def create
-        city = City.new(city_params)
+        city = City.create(city_params)
         if city.save
-          render json: { status: 'SUCCESS', message: 'Cidade salva', data: city }, status: :ok
+          render json: { status: 'SUCCESS', message: 'Cidade salva', data: city }, status: :created
         else
-          render json: { status: 'ERROR', message: 'Erro ao criar cidade', data: city.erros },
+          render json: { status: 'ERROR', message: 'Erro ao criar cidade', data: city.errors },
                  status: :unprocessable_entity
         end
       end

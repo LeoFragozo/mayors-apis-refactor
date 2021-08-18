@@ -3,21 +3,43 @@ require 'rails_helper'
 RSpec.describe 'Api::V1::Cities', type: :request do
   let(:city) { create(:city) }
 
-  describe 'GET /index' do
-    it 'must return 200 http status' do
-      get '/api/v1/cities'
-      expect(response).to have_http_status(:ok)
+  describe 'GET /cities' do
+    before { get '/api/v1/cities' }
+    it 'return cities data' do
+      expect(json_body).not_to be_empty
+    end
+    it 'return status 200' do
+      expect(response).to have_http_status(200)
     end
   end
 
-  describe 'GET /cities ' do
-    it 'create cities data' do
-      get "/api/v1/cities/#{city.id}"
+  describe 'GET /cities/:id ' do
+    before { get "/api/v1/cities/#{city.id}" }
+    it 'show spefic city data' do
+      expect(json_body[:data][:name]).to eq(city.name)
+    end
+    it 'return status 200' do
       expect(response).to have_http_status(200)
     end
-    it 'show city data' do
-      get "/api/v1/cities/#{city.id}"
-      expect(json_body[:data][:name]).to eq(city.name)
+  end
+
+  describe 'POST /api/v1/cities' do
+    let!(:name) { create(:city) }
+    let!(:state) { create(:state) }
+    let(:valid_city) do
+      { city: {name: 'Carazinho'}, state_id: state.id }
+    end
+    context 'when the city is valid' do
+      before { post '/api/v1/cities', params: valid_city }
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+      context 'when the city is invalid' do
+        before { post '/api/v1/cities', params: nil }
+        it 'returns status code 422' do
+          expect(response).to have_http_status(422)
+        end
     end
   end
 
@@ -43,18 +65,6 @@ RSpec.describe 'Api::V1::Cities', type: :request do
     it 'destroy city data' do
       delete "/api/v1/cities/#{city.id}"
       expect(response.status).to eq(200)
-    end
-  end
-
-  describe 'create city data' do
-    it 'gets city data' do
-      create(:city)
-      get '/api/v1/cities'
-      expect(json_body[:data][0]).to have_key(:id)
-      expect(json_body[:data][0]).to have_key(:name)
-      expect(json_body[:data][0]).to have_key(:created_at)
-      expect(json_body[:data][0]).to have_key(:updated_at)
-      expect(json_body[:data][0][:name]).to eq(city.name)
     end
   end
 end
