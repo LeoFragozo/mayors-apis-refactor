@@ -18,9 +18,9 @@ module Api
       def create
         state = State.new(state_params)
         if state.save
-          render json: { status: 'SUCCESS', message: 'Estado salvo', data: state }, status: :ok
+          render json: { status: 'SUCCESS', message: 'Estado salvo', data: state }, status: :created
         else
-          render json: { status: 'ERROR', message: 'Estado não salvo', data: state.erros },
+          render json: { status: 'ERROR', message: 'Estado não salvo', data: state.errors },
                  status: :unprocessable_entity
         end
       end
@@ -43,7 +43,7 @@ module Api
       private
 
       def state_params
-        params.require(:state).permit(:name, :uf)
+        params.permit(:name, :uf)
       end
     end
   end

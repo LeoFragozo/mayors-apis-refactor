@@ -27,7 +27,7 @@ RSpec.describe 'Api::V1::Cities', type: :request do
     let!(:name) { create(:city) }
     let!(:state) { create(:state) }
     let(:valid_city) do
-      { city: {name: 'Carazinho'}, state_id: state.id }
+      { name: city.name, state_id: state.id }
     end
     context 'when the city is valid' do
       before { post '/api/v1/cities', params: valid_city }
@@ -35,18 +35,18 @@ RSpec.describe 'Api::V1::Cities', type: :request do
         expect(response).to have_http_status(201)
       end
     end
-      context 'when the city is invalid' do
-        before { post '/api/v1/cities', params: nil }
-        it 'returns status code 422' do
-          expect(response).to have_http_status(422)
-        end
+    context 'when the city is invalid' do
+      before { post '/api/v1/cities', params: nil }
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
     end
   end
 
   describe 'PUT /cities/:id' do
     context 'when city data exist' do
       it 'update city data' do
-        body_data = { city: { name: city.name } }
+        body_data = { name: city.name }
         put "/api/v1/cities/#{city.id}", params: body_data
         expect(response.status).to eq(204)
       end
@@ -54,7 +54,7 @@ RSpec.describe 'Api::V1::Cities', type: :request do
 
     context 'when city dosent exist' do
       it 'doesnt update city data' do
-        body_data = { city: { name: nil } }
+        body_data = { name: nil }
         put "/api/v1/cities/#{city.id}", params: body_data
         expect(response.status).to eq(422)
       end

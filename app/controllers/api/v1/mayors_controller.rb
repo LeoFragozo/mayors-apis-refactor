@@ -20,9 +20,9 @@ module Api
       def create
         mayor = Mayor.new(mayor_params)
         if mayor.save
-          render json: { status: 'SUCCESS', message: 'Prefeito/a salvo/a', data: mayor }, status: :ok
+          render json: { status: 'SUCCESS', message: 'Prefeito/a salvo/a', data: mayor }, status: :created
         else
-          render json: { status: 'ERROR', message: 'Prefeito/a não salvo/a', data: mayor.erros },
+          render json: { status: 'ERROR', message: 'Prefeito/a não salvo/a', data: mayor.errors },
                  status: :unprocessable_entity
         end
       end
@@ -45,7 +45,7 @@ module Api
       private
 
       def mayor_params
-        params.require(:mayor).permit(:name, :gender)
+        params.permit(:name, :gender, :city_id)
       end
     end
   end
